@@ -5,8 +5,9 @@ from flask import Flask, request, jsonify, render_template
 import joblib
 # from tensorflow.keras.models import load_model
 
-app = Flask(__name__)
 
+app = Flask(__name__, 
+           template_folder=os.path.join(os.path.dirname(__file__), 'templates'))
 # Load saved models
 dt_model = joblib.load('models/nate_decision_tree.sav')
 # dl_model = joblib.load('models/imblearn_pipeline.sav')
