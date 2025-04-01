@@ -31,7 +31,7 @@ loaded_models = {
 def decode(pred):
     if pred == 1: return 'Customer Exits'
     else: return 'Customer Stays'
-
+app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), 'templates'))
 @app.route('/')
 def home():
     # Initial rendering
@@ -49,7 +49,16 @@ def home():
     maind['predictions'] = result
 
     return render_template('index.html', maind=maind)
-
+    
+@app.route('/debug')
+def debug():
+    import os
+    return {
+        'current_directory': os.listdir('.'),
+        'templates_contents': os.listdir('templates') if os.path.exists('templates') else 'MISSING',
+        'template_path': os.path.abspath('templates/index.html')
+    }
+    
 @app.route('/predict', methods=['POST'])
 def predict():
 
